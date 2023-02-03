@@ -1,8 +1,13 @@
 import pandas as pd
 import re
 import math
+import os
 
-
+# To Use: 
+# Move data files into folder called Data. Data should be contained within the same folder as dataGarbageRemover.py and regex.txt.
+# Write all regexes into regex.txt.
+# Run Program. Copies of the data files will be written to a folder called output, with all text patterns matching any regex 
+# removed for all listed columns for that file. If a raw column is listed, then a non-raw column is added to the copy instead.
 if __name__ == "__main__":
     fileColumns = (("Data//bbc_news_list_uk.json",("title","content","short_description")),
                    ("Data//cnbc_news_datase.csv",("title","short_description","description")),
@@ -50,6 +55,9 @@ if __name__ == "__main__":
 
         splitFile = file.split("//")
         splitFile[-1] = "clean_"+splitFile[-1].replace("csv","json")
-        newFile = "//".join(splitFile)
+        newFile = "output//"+"//".join(splitFile[1:])
 
+        if not os.path.exists("output"):
+            os.makedirs("output")
+            
         df.to_json(newFile)
