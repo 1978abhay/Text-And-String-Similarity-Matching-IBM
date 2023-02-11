@@ -5,3 +5,11 @@ IBM, Trinity College Dublin, Computer Science, Software Engineering Project, Spr
 ## Objective:
 
 
+## Run Frontend
+
+1. Open main folder in terminal
+2. Run "flask --app frontpage run" *
+
+* If flask has not been installed, run "pip install Flask" 
+
+
