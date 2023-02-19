@@ -1,14 +1,36 @@
 import numpy as geek
+import nltk
+#nltk.download('wordnet')
+from nltk.corpus import wordnet
+def anotherWord(word, word1):
+    answer = False
+    synonyms = []
+    #antonyms = []
+    
+    for syn in wordnet.synsets(word):
+        for l in syn.lemmas():
+            synonyms.append(l.name())
+            #if l.antonyms():
+            # antonyms.append(l.antonyms()[0].name())
+    
+  #  print(set(synonyms))
+    for i in range(len(synonyms)):
+        if(synonyms[i]==word1):
+            answer = True
+            break
+    return answer
+   
 def get_average_wordLength(word):
     counter =0
     for i in range(len(word)):
-        counter = counter + len(word[i])-1
+        counter = counter + len(word[i])
     average = counter/len(word)
     return average
 def min_distance(firstWord, secondWord):
-
     firstWord =[i for i in firstWord]
+    firstWord = fix_word_format(firstWord)
     secondWord = [i for i in secondWord]
+    secondWord = fix_word_format(secondWord)
     answer = geek.zeros((len(secondWord), len(firstWord)))
     for j in range(len(firstWord)):
         answer[0,j]=j
@@ -29,11 +51,17 @@ def min_distance(firstWord, secondWord):
     a = len(secondWord)-1
     b= len(firstWord)-1
     return answer[a,b]
-string = "#22 #was #great"
+def fix_word_format(word):
+    newWord = ""
+    newWord = newWord+"#"
+    for s in range(len(word)):
+     newWord = newWord+word[s]
+    return newWord
+string = "The man looked at the clock. There was a lot of problems that were keeping him awake at night"
 
 a = string.split(' ')
 angels =get_average_wordLength(a)
-string1 = "#22 #is #great"
+string1 = "The woman peeked at the clone. She had a lot of issues that were halting her wake at night"
 b = string1.split(' ')
 angels1 =get_average_wordLength(b)
 cumulative =0
@@ -56,7 +84,17 @@ if(ratio>0 and ratio<1):
 else:
  ratio =0
 finalAnswer = finalAnswer*100
-print(finalAnswer, "% Ratio")
+print(finalAnswer, "% Similarity by spelling")
+
+#testing similarities by meanings
+thecounter =0
+for z in range(numberOfWordsInText1-1):
+  #print("a", a[z])
+  #print("b", b[z])
+  if(anotherWord(a[z],b[z] )==True or a[z]==b[z]):
+     thecounter=thecounter+1
+thecounter = thecounter/numberOfWordsInText1*100
+print(thecounter, "% Similarity by meanings")
 #totalNumberOfLettersInText2 = averageLenfthOfWordsInText2*numberOfWordsInText2
 
                     
