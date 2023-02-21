@@ -1,25 +1,8 @@
 import numpy as geek
 import nltk
-#nltk.download('wordnet')
-from nltk.corpus import wordnet
-def anotherWord(word, word1):
-    answer = False
-    synonyms = []
-    #antonyms = []
-    
-    for syn in wordnet.synsets(word):
-        for l in syn.lemmas():
-            synonyms.append(l.name())
-            #if l.antonyms():
-            # antonyms.append(l.antonyms()[0].name())
-    
-  #  print(set(synonyms))
-    for i in range(len(synonyms)):
-        if(synonyms[i]==word1):
-            answer = True
-            break
-    return answer
-   
+import pandas as pd
+#This is the code I was working on that uses the levenshtein algorithm to provide a similarity score for the strings I
+#used as examples before. However, it is done on a one to one basis so needs to be improved with Peter's new algorithm.
 def get_average_wordLength(word):
     counter =0
     for i in range(len(word)):
@@ -71,12 +54,10 @@ for f in range(len(b)):
    thesol = min_distance(word,word1)
    cumulative = cumulative + thesol
 averageLengthOfWordsInText1 = angels
-averageLenfthOfWordsInText2 = angels1
 numberOfWordsInText1 = len(a)
-numberOfWordsInText2 = len(b)
 totalNumberOfLettersInText1 = averageLengthOfWordsInText1*numberOfWordsInText1
-print(totalNumberOfLettersInText1)
-print(cumulative, "cumulative")
+print(totalNumberOfLettersInText1,"Total number of letters in text1 ",)
+print(cumulative, "cumulative number of edits")
 ratio = cumulative/ totalNumberOfLettersInText1
 finalAnswer =0
 if(ratio>0 and ratio<1):
@@ -86,16 +67,7 @@ else:
 finalAnswer = finalAnswer*100
 print(finalAnswer, "% Similarity by spelling")
 
-#testing similarities by meanings
-thecounter =0
-for z in range(numberOfWordsInText1-1):
-  #print("a", a[z])
-  #print("b", b[z])
-  if(anotherWord(a[z],b[z] )==True or a[z]==b[z]):
-     thecounter=thecounter+1
-thecounter = thecounter/numberOfWordsInText1*100
-print(thecounter, "% Similarity by meanings")
-#totalNumberOfLettersInText2 = averageLenfthOfWordsInText2*numberOfWordsInText2
+
 
                     
     
