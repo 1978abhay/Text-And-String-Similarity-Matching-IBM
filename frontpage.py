@@ -10,6 +10,14 @@ def homepage():
 def compare():
     return render_template('score.html')
 
+@app.route('/about')
+def about():
+    return render_template('infopage.html')
+
+@app.route('/rerouter')
+def rerouter():
+    return redirect('/')
+
 
 
 #@app.route("/compare", methods=["POST", "GET"])
