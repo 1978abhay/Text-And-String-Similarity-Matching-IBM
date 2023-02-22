@@ -4,36 +4,40 @@
 	<link 
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" 
 	integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-	<title> Text Similarity Matcher </title>
+		<title> Text Similarity Matcher </title>
 </head>
-	<body>
-	<h1 style="text-align:center">TEXT COMPARE</h1>
-	<form>
-		<!--Insert Text 1:<br> <input type="text" name="text1">
-		<br>
-		Insert Text 2:<br> <input type="text" name="text2">
-		<br>-->
-		<div class="inline-div">
-			<label for="text1">Insert Text 1 here:</label>
-			<br>
-			<textarea id="text1" name="text1" rows="10" cols="50" class="inline-div">
-			</textarea><br><br>
+	<body style="background-color:lightcoral;">
+		<h1 style="font-family: Baskerville Old Face; text-align:center; border-bottom: 2px solid #000000; color: #000000; font-size: 40px; 
+					text-transform: uppercase; letter-spacing: 4px; margin-bottom: 30px;">TEXT COMPARE</h1>		
+			<div style="display:flex;">
+			<form style="margin-left:85px; margin-right:150px;">
+				<label for="text1" style="font-family: Baskerville Old Face; font-weight: bold;">Insert Text 1 Here:</label>
+				<br>
+				<textarea id="text1" name="text1" rows="10" cols="50" class="inline-div" style="background-color:white;border: 4px solid black;"></textarea>
+				<br><br>
+			</form>
+			<form style="margin-left:85; margin-right: 150;">
+				<label for="text2" style="font-family: Baskerville Old Face; font-weight: bold;">Insert Text 2 Here:</label>
+				<br>
+				<textarea id="text2" name="text2" rows="10" cols="50" class="inline-div" style="background-color:white; border: 4px solid black;"></textarea>
+				<br><br>
+			</form>
 		</div>
-		<div class="inline-div">
-			<label for="text2">Insert Text 2 here:</label>
-			<br>
-			<textarea id="text2" name="text2" rows="10" cols="50" class="inline-div">
-			</textarea><br><br>
-		</div>
- 	</form>
- 	<p align="center">
+
+ 	<p align="center" style="font-family: Baskerville Old Face;">
    		<a href=compare >
-	   		<button style="background-color:rgb(31, 76, 23);border-color:darkolivegreen;height:30px;width:100px">COMPARE</button>
+	   		<button ui="height:30px;width:100px background-color: #4CAF50; color: white;">COMPARE</button>
    		</a>
  	</p>
- 	<p align="left">
+	 <style>
+		button:hover {
+			background-color:lightcoral;
+			color: white;
+		}
+	</style>
+ 	<p align="center" style="font-family: Baskerville Old Face;">
 		<a href=about >
-			<button style="background-color:lightgreen;border-color:darkolivegreen;height:30px;width:20px">?</button>
+			<button ui="height:30px;width:60px">About</button>
 		</a>
   </p>
 
