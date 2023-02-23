@@ -17,4 +17,6 @@ def anotherWord(word, word1):
             answer = True
             break
     return answer
-print(anotherWord("good","bad"))
+
+if __name__ == "__main__":
+    print(anotherWord("good","bad"))

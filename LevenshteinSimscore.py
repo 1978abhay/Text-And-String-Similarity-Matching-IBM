@@ -8,6 +8,11 @@ def fix_word_format(word):
      newWord = newWord+word[s]
     return newWord
 def min_distance(firstWord, secondWord):
+    if firstWord == "":
+        return len(secondWord)
+    elif secondWord == "":
+        return len(firstWord)
+    
     firstWord =[i for i in firstWord]
     firstWord = fix_word_format(firstWord)
     secondWord = [i for i in secondWord]
@@ -17,6 +22,7 @@ def min_distance(firstWord, secondWord):
         answer[0,j]=j
     for j1 in range(len(secondWord)):
         answer[j1,0]=j1
+    
     if(firstWord[1]!=secondWord[1]):
         answer[1,1]=2
         
@@ -40,4 +46,6 @@ def sim_score(word, word1):
     else:
         simScore = 1-(numberOfEdits/lengthOfFirstWord)
         return simScore
-print(sim_score("party","parties"))
+
+if __name__ == "__main__":
+    print(sim_score("party","parties"))

@@ -32,4 +32,5 @@ def min_distance(firstWord, secondWord):
     a = len(secondWord)-1
     b= len(firstWord)-1
     return answer[a,b]
-print(min_distance("party","parties"))
+if __name__ == "__main__":
+    print(min_distance("party","parties"))
