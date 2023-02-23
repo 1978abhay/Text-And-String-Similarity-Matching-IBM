@@ -35,9 +35,10 @@ def min_distance(firstWord, secondWord):
                     answer[r,c]= answer[r,c-1]+1 
             else:
                 answer[r,c]= answer[r-1,c-1]
-    a = len(secondWord)-1
-    b= len(firstWord)-1
-    return answer[a,b]
+    lastRowIndex = len(secondWord)-1
+    lastColumnIndex= len(firstWord)-1
+    return answer[lastRowIndex,lastColumnIndex]
+
 def sim_score(word, word1):
     lengthOfFirstWord = len(word)
     numberOfEdits =min_distance(word,word1)
