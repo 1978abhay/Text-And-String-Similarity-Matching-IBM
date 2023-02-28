@@ -1,0 +1,7 @@
+.inline-div {
+    display:inline-block;
+}
+.inline-txtarea {
+    resize: none;
+    height:125px;
+}
