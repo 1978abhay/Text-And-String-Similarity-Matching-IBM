@@ -3,9 +3,10 @@
 	<title> Score </title>
 </head>
 
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
 	<body style="background-color: lightskyblue;">
 	<p style="font-family: Baskerville Old Face;">Your similarity score is:</p>
-
+	<p id="score" style="font-family: Baskerville Old Face;" >nothing</p>
 	<p align="center">
 		<a href=rerouter>
 			<button ui="height:30px;width:100px" style="font-family: Baskerville Old Face;">HOMEPAGE</button>
@@ -18,4 +19,39 @@
 		}
 	</style>
 	</body>
+
+	<script>
+		var output_score = document.getElementById("score").innerText;
+
+		$(
+			function() {
+				test_compare();
+				//fetchCompScore(output_score, "/testFunc");
+			}
+		);
+		/*
+		function fetchCompScore(score, link) {
+			$.ajax({
+				type: "GET",
+				url: link,
+				dataType: "text",
+				success: function(result){
+					score = result;
+					document.getElementById("score").innerText = result;
+				}
+			});
+		}*/
+
+		function test_compare() {
+
+			var string1 = sessionStorage.getItem("firstString");
+			var string2 = sessionStorage.getItem("secondString");
+
+
+			fetch('/testFunc/'.concat(string1, "/", string2))
+				.then((response) => response.json())
+				.then((data) => document.getElementById("score").innerText = data);
+		}
+
+	</script>
 <html>
