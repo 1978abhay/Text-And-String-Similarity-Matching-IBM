@@ -1,11 +1,13 @@
-import requests
-from flask import Flask, session, render_template, redirect, url_for, request, jsonify
-import json
+from flask import Flask, render_template, redirect
 import cosine
+import jaccard
+import json
 
 app = Flask(__name__)
 
 compresult = ""
+
+
 @app.route("/")
 def homepage():
     return render_template("homepage.html")
@@ -30,18 +32,22 @@ def rerouter():
 def tryprocess(string1, string2):
     string1Vect = cosine.text_to_vector(string1)
     string2Vect = cosine.text_to_vector(string2)
-    compresult = cosine.get_cosine(string1Vect, string2Vect)
+    cosineans = cosine.get_cosine(string1Vect, string2Vect)
 
     print("string1 : ", string1, "string2 : ", string2)
-    print("result is ", compresult)
+    print("cosine result is ", cosineans)
 
+    jaccardans = jaccard.jaccard_index(string1, string2)
 
-    return str(compresult)
+    print("jaccard result is: ", jaccardans)
 
-@app.route('/compResult')
-def fetchResult():
-    print(compresult)
-    return str(compresult)
+    results = {
+        "cosine": cosineans,
+        "jaccard": jaccardans
+    }
+
+    return json.dumps(results)
+
 
 #
 # @app.route("/compare", methods=["POST", "GET"])
@@ -59,7 +65,3 @@ def fetchResult():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-
-
-
