@@ -3,9 +3,11 @@
 	<title> Score </title>
 </head>
 
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
 	<body style="background-color: lightskyblue;">
 	<p style="font-family: Baskerville Old Face;">Your similarity score is:</p>
-
+	<p id="cosine_score" style="font-family: Baskerville Old Face;" >nothing</p>
+	<p id="jaccard_score" style="font-family: Baskerville Old Face;" >nothing</p>
 	<p align="center">
 		<a href=rerouter>
 			<button ui="height:30px;width:100px" style="font-family: Baskerville Old Face;">HOMEPAGE</button>
@@ -18,4 +20,42 @@
 		}
 	</style>
 	</body>
+
+	<script>
+		var output_score = document.getElementById("cosine_score").innerText;
+
+		$(
+			function() {
+				test_compare();
+				//fetchCompScore(output_score, "/testFunc");
+			}
+		);
+		/*
+		function fetchCompScore(score, link) {
+			$.ajax({
+				type: "GET",
+				url: link,
+				dataType: "json",
+				success: function(result){
+					score = result;
+					document.getElementById("cosine_score").innerText = result;
+				}
+			});
+		}*/
+
+		async function test_compare() {
+
+			var string1 = sessionStorage.getItem("firstString");
+			var string2 = sessionStorage.getItem("secondString");
+
+
+			const response = await fetch('/testFunc/'.concat(string1, "/", string2), {
+				method: 'GET'
+			});
+			const results = await response.json();
+			document.getElementById("cosine_score").innerText = "Cosine Result: ".concat(results.cosine);
+			document.getElementById("jaccard_score").innerText = "Jaccard Index Result: ".concat(results.jaccard);
+		}
+
+	</script>
 <html>
