@@ -14,19 +14,14 @@
 		<div class="text">
 	<h2>Your similarity score is:</h2>
 	<p id="cosine_score">Incorrect Input for Texts</p>
-	<p id="jaccard_score">Incorrect Input for Texts</p>
+	<p id="jaccard_score"></p>
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
 </div>
 	</body>
-
-	<script>
-		function page(){
-		window.location.href = window.history.back(1);
-	 }
-	 </script>
 	 
 	<script>
 		var output_score = document.getElementById("jaccard_score").innerText;
+		var output_score = document.getElementById("cosine_score").innerText;
 
 		$(
 			function() {
@@ -57,9 +52,14 @@
 				method: 'GET'
 			});
 			const results = await response.json();
+			if(results.jaccard == "")
+				document.getElementById("cosine_score").innerText = "No Text Input";
+			else{
 			document.getElementById("cosine_score").innerText = "Cosine Result: ".concat(results.cosine);
 			document.getElementById("jaccard_score").innerText = "Jaccard Index Result: ".concat(results.jaccard);
+			}
 		}
+
 
 	</script>
 <html>
