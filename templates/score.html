@@ -8,6 +8,7 @@
 	<p style="font-family: Baskerville Old Face;">Your similarity score is:</p>
 	<p id="cosine_score" style="font-family: Baskerville Old Face;" >nothing</p>
 	<p id="jaccard_score" style="font-family: Baskerville Old Face;" >nothing</p>
+	<p id="average_score" style="font-family: Baskerville Old Face;" >nothing</p>
 	<p align="center">
 		<a href=rerouter>
 			<button ui="height:30px;width:100px" style="font-family: Baskerville Old Face;">HOMEPAGE</button>
@@ -55,6 +56,7 @@
 			const results = await response.json();
 			document.getElementById("cosine_score").innerText = "Cosine Result: ".concat(results.cosine);
 			document.getElementById("jaccard_score").innerText = "Jaccard Index Result: ".concat(results.jaccard);
+			document.getElementById("average_score").innerText = "Average Similarity Score: ".concat(results.average);
 		}
 
 	</script>

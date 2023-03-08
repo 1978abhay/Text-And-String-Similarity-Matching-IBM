@@ -41,9 +41,12 @@ def tryprocess(string1, string2):
 
     print("jaccard result is: ", jaccardans)
 
+    averagescore = (jaccardans + cosineans) / 2
+
     results = {
         "cosine": cosineans,
-        "jaccard": jaccardans
+        "jaccard": jaccardans,
+        "average": averagescore
     }
 
     return json.dumps(results)
