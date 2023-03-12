@@ -4,11 +4,12 @@ IBM, Trinity College Dublin, Computer Science, Software Engineering Project, Spr
 
 ## Objective:
 
+An application that will generate a score for two bodies of text based on the similarity of the information contained in both.
 
 ## Run Frontend
 
 1. Open main folder in terminal
-2. Run "flask --app frontpage run" *
+2. Run "flask --app frontpage --debug run" *
 
 * If flask has not been installed, run "pip install Flask" 
 

@@ -1,0 +1,11 @@
+{
+  "name": "text-and-string-similarity-matching-ibm",
+  "version": "1.0.0",
+  "description": "A program for text comparison",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

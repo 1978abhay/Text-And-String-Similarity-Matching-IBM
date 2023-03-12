@@ -15,12 +15,12 @@ def homepage():
 
 @app.route('/compare')
 def compare():
-    return render_template('score.html')
+    return render_template("score.html")
 
 
 @app.route('/about')
 def about():
-    return render_template('infopage.html')
+    return render_template("infopage.html")
 
 
 @app.route('/rerouter')

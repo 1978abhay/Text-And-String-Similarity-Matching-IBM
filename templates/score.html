@@ -1,28 +1,34 @@
+<!doctype html>
 <html>
 <head>
-	<title> Score </title>
+	<link href="{{ url_for('static', filename='compare.css') }}" rel="stylesheet" type="text/css">
+	<title> Comparison Results </title>
 </head>
 
-	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
-	<body style="background-color: lightskyblue;">
-	<p style="font-family: Baskerville Old Face;">Your similarity score is:</p>
-	<p id="cosine_score" style="font-family: Baskerville Old Face;" >nothing</p>
-	<p id="jaccard_score" style="font-family: Baskerville Old Face;" >nothing</p>
-	<p id="average_score" style="font-family: Baskerville Old Face;" >nothing</p>
-	<p align="center">
-		<a href=rerouter>
-			<button ui="height:30px;width:100px" style="font-family: Baskerville Old Face;">HOMEPAGE</button>
-		</a>
- 	</p>
-	 <style>
-		button:hover {
-			background-color:lightskyblue;
-			color: white;
-		}
-	</style>
-	</body>
+	<body>
 
+		<a href=rerouter>
+			<button class="back">&lt</button> 
+		</a>
+		<br>
+		<h1> Comparison Results</h1>
+
+
+		<div class="text">
+			<h2>Your similarity score is:</h2>
+			<p id="cosine_score">Incorrect Input for Texts</p>
+			<p id="jaccard_score"></p>
+		<br>
+			<div class="graph" role="progressbar" aria-valuenow="65" aria-valuemin="0" 
+			aria-valuemax="100" style="--value:45"></div>
+		<div class="text">
+	
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+</div>
+	</body>
+	 
 	<script>
+		var output_score = document.getElementById("jaccard_score").innerText;
 		var output_score = document.getElementById("cosine_score").innerText;
 
 		$(
@@ -54,10 +60,15 @@
 				method: 'GET'
 			});
 			const results = await response.json();
-			document.getElementById("cosine_score").innerText = "Cosine Result: ".concat(results.cosine);
-			document.getElementById("jaccard_score").innerText = "Jaccard Index Result: ".concat(results.jaccard);
-			document.getElementById("average_score").innerText = "Average Similarity Score: ".concat(results.average);
+			if(results.jaccard == "")
+				document.getElementById("cosine_score").innerText = "No Text Input";
+			else{
+			  document.getElementById("cosine_score").innerText = "Cosine Result: ".concat(results.cosine);
+			  document.getElementById("jaccard_score").innerText = "Jaccard Index Result: ".concat(results.jaccard);
+			  document.getElementById("average_score").innerText = "Average Similarity Score: ".concat(results.average);
+			}
 		}
+
 
 	</script>
 <html>
