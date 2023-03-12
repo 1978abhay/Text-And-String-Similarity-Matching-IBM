@@ -43,7 +43,6 @@ def sim_score(word, word1):
     else:
      lengthOfLongestWord = len(word1)
     numberOfEdits =min_distance(word,word1)
-    print(numberOfEdits,"number of edits")
     if(numberOfEdits>lengthOfLongestWord):
       return 0
     else:
