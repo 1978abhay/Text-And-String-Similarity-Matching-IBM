@@ -2,6 +2,7 @@
 from cosine import *
 from jaccard import *
 from mongeElkan import *
+from numpy import *
 from LevenshteinSimscore import *
 
 # Testing the cosine similarity matching algorithm against two identical strings
