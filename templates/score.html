@@ -4,7 +4,9 @@
 	<link href="{{ url_for('static', filename='compare.css') }}" rel="stylesheet" type="text/css">
 	<title> Comparison Results </title>
 </head>
+
 	<body>
+
 		<a href=rerouter>
 			<button class="back">&lt</button> 
 		</a>
@@ -61,8 +63,9 @@
 			if(results.jaccard == "")
 				document.getElementById("cosine_score").innerText = "No Text Input";
 			else{
-			document.getElementById("cosine_score").innerText = "Cosine Result: ".concat(results.cosine);
-			document.getElementById("jaccard_score").innerText = "Jaccard Index Result: ".concat(results.jaccard);
+			  document.getElementById("cosine_score").innerText = "Cosine Result: ".concat(results.cosine);
+			  document.getElementById("jaccard_score").innerText = "Jaccard Index Result: ".concat(results.jaccard);
+			  document.getElementById("average_score").innerText = "Average Similarity Score: ".concat(results.average);
 			}
 		}
 
