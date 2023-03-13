@@ -15,15 +15,17 @@
 
 
 		<div class="text">
-			<h2>Your similarity score is:</h2>
-			<p id="cosine_score">Incorrect Input for Texts</p>
+			<h2>Your similarity Scores:</h2>
+			<p id="cosine_score"></p>
 			<p id="jaccard_score"></p>
 			<p id="longME_score"></p>
-			<p id="average_score"></p>
+			<br>
+			<h3 id="average_score"></h3>
 		</div>
-		</br>
-			<div id="average_graph" class="graph" role="progressbar" aria-valuenow="65" aria-valuemin="0"
-			aria-valuemax="100" style="--value:10"></div>
+
+		
+		<div id="average_graph" class="graph" role="progressbar" aria-valuenow="65" aria-valuemin="0"
+			aria-valuemax="100" style="--value:0"></div>
 		<div class="text">
 	
 			<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
@@ -64,14 +66,22 @@
 			});
 			const results = await response.json();
 			if(results.jaccard == "")
-				document.getElementById("cosine_score").innerText = "No Text Input";
-			else{
-			  document.getElementById("cosine_score").innerText = "Cosine Result: ".concat(results.cosine);
-			  document.getElementById("jaccard_score").innerText = "Jaccard Index Result: ".concat(results.jaccard);
-			  document.getElementById("longME_score").innerText = "Long Monge Elkan Result: ".concat(results.lmongeelkan);
-			  document.getElementById("average_score").innerText = "Average Similarity Score: ".concat(results.average);
-			  document.getElementById("average_graph").setAttribute("style", "--value:".concat(Math.round(results.average)));
-			}
+				document.getElementById("jaccard_score").innerText = "Jaccard Index Result: 0";
+			else
+			  document.getElementById("cosine_score").innerText = "Jaccard Index Result: ".concat(results.jaccard);
+			
+		    if(results.cosine == "")
+				document.getElementById("cosine_score").innerText = "Cosine Result: 0";
+			else
+			    document.getElementById("cosine_score").innerText = "Cosine Result: ".concat(results.cosine);
+			  
+			if(results.lmongeelkan == "")
+				document.getElementById("longME_score").innerText = "Long Monge Elkan Result: 0";
+			else
+			    document.getElementById("longME_score").innerText = "Long Monge Elkan Result: ".concat(results.cosine);
+			
+			document.getElementById("average_score").innerText = "Average Similarity Score: ".concat(results.average);
+			document.getElementById("average_graph").setAttribute("style", "--value:".concat(Math.round(results.average)));
 		}
 
 

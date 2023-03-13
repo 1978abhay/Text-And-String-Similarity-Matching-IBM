@@ -46,7 +46,7 @@ def tryprocess(string1, string2):
     longmongeelkan = me.longMongeElkan(1, string1, string2, lt.sim_score)
     print(longmongeelkan)
 
-    averagescore = (jaccardans + cosineans) / 2
+    averagescore = (jaccardans + cosineans + longmongeelkan)/3;
 
     results = {
         "cosine": cosineans,
