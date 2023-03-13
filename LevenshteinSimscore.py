@@ -1,6 +1,4 @@
 import numpy as geek
-#This file contains the levenshtein function with the similarity score function. Basically u can input 2 words and it gives u the sim score between the 2 words.
-#e.g. party and parties has a sim score of 0.2 roughly since. It needs 4 edits and there are 5 letters in the original word. 
 def fix_word_format(word):
     newWord = ""
     newWord = newWord+"#"
@@ -40,12 +38,15 @@ def min_distance(firstWord, secondWord):
     return answer[lastRowIndex,lastColumnIndex]
 
 def sim_score(word, word1):
-    lengthOfFirstWord = len(word)
+    if(len(word)> len(word1)):
+     lengthOfLongestWord = len(word)
+    else:
+     lengthOfLongestWord = len(word1)
     numberOfEdits =min_distance(word,word1)
-    if(numberOfEdits>lengthOfFirstWord):
+    if(numberOfEdits>lengthOfLongestWord):
       return 0
     else:
-        simScore = 1-(numberOfEdits/lengthOfFirstWord)
+        simScore = 1-(numberOfEdits/lengthOfLongestWord)
         return simScore
 
 if __name__ == "__main__":
