@@ -2,6 +2,8 @@ from flask import Flask, render_template, redirect
 import cosine
 import jaccard
 import json
+import mongeElkan as me
+import LevenshteinSimscore as lt
 
 app = Flask(__name__)
 
@@ -41,12 +43,16 @@ def tryprocess(string1, string2):
 
     print("jaccard result is: ", jaccardans)
 
-    averagescore = (jaccardans + cosineans) / 2
+    longmongeelkan = me.longMongeElkan(1, string1, string2, lt.sim_score)
+    print("longmongeelkan result is: ",longmongeelkan)
+
+    averagescore = (jaccardans + cosineans + longmongeelkan)/3;
 
     results = {
         "cosine": cosineans,
         "jaccard": jaccardans,
-        "average": averagescore
+        "lmongeelkan": longmongeelkan,
+        "average": round(averagescore * 100, 3)
     }
 
     return json.dumps(results)
