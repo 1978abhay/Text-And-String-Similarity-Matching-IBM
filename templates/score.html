@@ -15,7 +15,7 @@
 
 
 		<div class="text">
-			<h2>Your similarity Scores:</h2>
+			<h2>Your Similarity Scores:</h2>
 			<p id="cosine_score"></p>
 			<p id="jaccard_score"></p>
 			<p id="longME_score"></p>
@@ -80,7 +80,7 @@
 			else
 			    document.getElementById("longME_score").innerText = "Long Monge Elkan Result: ".concat(results.cosine);
 			
-			document.getElementById("average_score").innerText = "Average Similarity Score: ".concat(average);
+			document.getElementById("average_score").innerText = "Average Similarity Score: ".concat(results.average);
 			document.getElementById("average_graph").setAttribute("style", "--value:".concat(Math.round(results.average)));
 		}
 
