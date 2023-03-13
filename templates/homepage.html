@@ -47,7 +47,9 @@
 	function test_compare() {
 
 		var string1 = document.getElementById("text1").value;
+		string1 = string1.replace(/\?/g, '.');
 		var string2 = document.getElementById("text2").value;
+		string2 = string2.replace(/\?/g, '.');
 		sessionStorage.setItem("firstString", string1);
 		sessionStorage.setItem("secondString", string2);
 		//fetch('/testFunc/'.concat(string1, "/", string2))
