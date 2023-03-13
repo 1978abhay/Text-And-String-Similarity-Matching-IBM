@@ -47,6 +47,7 @@ def tryprocess(string1, string2):
     print("longmongeelkan result is: ",longmongeelkan)
 
     averagescore = (jaccardans + cosineans + longmongeelkan)/3;
+    print("Average score:", round(averagescore * 100, 3))
 
     results = {
         "cosine": cosineans,
