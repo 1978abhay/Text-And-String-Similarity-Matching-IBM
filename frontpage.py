@@ -44,7 +44,7 @@ def tryprocess(string1, string2):
     print("jaccard result is: ", jaccardans)
 
     longmongeelkan = me.longMongeElkan(1, string1, string2, lt.sim_score)
-    print(longmongeelkan)
+    print("longmongeelkan result is: ",longmongeelkan)
 
     averagescore = (jaccardans + cosineans + longmongeelkan)/3;
 
