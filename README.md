@@ -13,4 +13,8 @@ An application that will generate a score for two bodies of text based on the si
 
 * If flask has not been installed, run "pip install Flask" 
 
+## Kill Running Port (mac)
+
+sudo lsof -i :5000
+kill -9 <PID>
 
