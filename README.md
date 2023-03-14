@@ -15,6 +15,6 @@ An application that will generate a score for two bodies of text based on the si
 
 ## Kill Running Port (mac)
 
-sudo lsof -i :5000
-kill -9 <PID>
+1. sudo lsof -i :5000
+2. kill -9 <PID>
 
