@@ -19,6 +19,10 @@ def homepage():
 def compare():
     return render_template("score.html")
 
+@app.route('/summary')
+def summary():
+    return render_template("summary.html")
+
 
 @app.route('/about')
 def about():
