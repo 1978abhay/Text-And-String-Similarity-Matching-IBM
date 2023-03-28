@@ -4,10 +4,11 @@ import jaccard
 import json
 import mongeElkan as me
 import LevenshteinSimscore as lt
+import tf_idf as tf
+import spacy
+import Data_Garbage_Removal.summariseToN as summary
 
 app = Flask(__name__)
-
-compresult = ""
 
 
 @app.route("/")
@@ -44,16 +45,30 @@ def tryprocess(string1, string2):
     print("jaccard result is: ", jaccardans)
 
     longmongeelkan = me.longMongeElkan(1, string1, string2, lt.sim_score)
-    print("longmongeelkan result is: ",longmongeelkan)
+    print("longmongeelkan result is: ", longmongeelkan)
+    tfidf = tf.bert(string1, string2)
+    print("tf_idf result is: ", tfidf)
 
-    averagescore = (jaccardans + cosineans + longmongeelkan)/3;
-    print("Average score:", round(averagescore * 100, 3))
+    review = summary.summarise(string1 + string2, 1)
+    print(review)
+
+    nlp = spacy.load('en_core_web_lg')
+    str1 = nlp(string1)
+    str2 = nlp(string2)
+    str1_2 = str1.similarity(str2)
+    print("Spacy result is: ", str1_2)
+
+    averagescore = round(((jaccardans + cosineans + longmongeelkan + tfidf) / 4) * 100, 3)
+    print("Average score:", averagescore)
 
     results = {
         "cosine": cosineans,
         "jaccard": jaccardans,
         "lmongeelkan": longmongeelkan,
-        "average": round(averagescore * 100, 3)
+        "tfidf": tfidf,
+        "spacy": str1_2,
+        "summary": review,
+        "average": averagescore
     }
 
     return json.dumps(results)
