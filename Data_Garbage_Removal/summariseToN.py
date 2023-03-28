@@ -51,8 +51,8 @@ def scale_summary(t1, t2):
     
 
 def summarise(text, n):
-
-    text = clean(text)
+    nltk.download('punkt')
+    # text = clean(text)
     # Tokenise the text into sentences
     sentences = sent_tokenize(text)
     #Algorithm to reduce words to their root. The idea is that we want to count words like "go" and "going" as the same thing.
