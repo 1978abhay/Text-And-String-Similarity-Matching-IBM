@@ -1,24 +1,28 @@
+from typing import Callable
+
 
 # Should function as list comprehension version below,
 # but will test to see which is more performant.
-def longMongeElkan(m, textA, textB, simFunc):
+def longMongeElkan(m: int, text_a: str, text_b: str, sim_func: Callable[[str, str], int]) -> float:
     total = 0
-    arrayA = textA.split(" ")
-    arrayB = textB.split(" ")
-    for a in arrayA:
-        maxSimilarity = -10**8
-        for b in arrayB:
-            similarity = simFunc(a,b)
-            if similarity > maxSimilarity:
-                maxSimilarity = similarity
-        total += maxSimilarity ** m
+    array_a = text_a.split(" ")
+    array_b = text_b.split(" ")
+    for a in array_a:
+        max_similarity = float("-inf")
+        for b in array_b:
+            similarity = sim_func(a, b)
+            if similarity > max_similarity:
+                max_similarity = similarity
+        total += max_similarity ** m
 
-    return (total / len(arrayA)) ** (1 / m)
-        
-def simMongeElkan(m, textA, textB, simFunc):
-    arrayB = textB.split(" ")
-    arrayA = textA.split(" ")
-    return (sum([max([simFunc(a,b) for b in arrayB])**m for a in arrayA])/len(arrayA))**(1/m)
+    return (total / len(array_a)) ** (1 / m)
 
-def quadSimilarityME(textA, textB, simFunc):
-    return simMongeElkan(2, textA, textB, simFunc)
+
+def simMongeElkan(m: int, text_a: str, text_b: str, sim_func: Callable[[str, str], int]) -> float:
+    array_b = text_b.split(" ")
+    array_a = text_a.split(" ")
+    return (sum([max([sim_func(a, b) for b in array_b]) ** m for a in array_a]) / len(array_a)) ** (1 / m)
+
+
+def quadSimilarityME(text_a: str, text_b: str, sim_func: Callable[[str, str], int]) -> float:
+    return simMongeElkan(2, text_a, text_b, sim_func)
