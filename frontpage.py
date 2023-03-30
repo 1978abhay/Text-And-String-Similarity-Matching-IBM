@@ -53,8 +53,8 @@ def tryprocess(string1, string2):
     tfidf = tf.bert(string1, string2)
     print("tf_idf result is: ", tfidf)
 
-    review = summary.summarise(string1 + string2, 1)
-    print(review)
+    #review = summary.summarise(string1 + string2, 1)
+    #print(review)
 
     nlp = spacy.load('en_core_web_lg')
     str1 = nlp(string1)
@@ -71,7 +71,7 @@ def tryprocess(string1, string2):
         "lmongeelkan": longmongeelkan,
         "tfidf": tfidf,
         "spacy": str1_2,
-        "summary": review,
+        #"summary": review,
         "average": averagescore
     }
 
