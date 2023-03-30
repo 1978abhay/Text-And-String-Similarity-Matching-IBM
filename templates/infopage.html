@@ -6,7 +6,7 @@
 </head>
 	<body>
 			<a href=rerouter>
-				<button class="back">&lt</button> 
+				<button class="back">&lt</button>
 			</a>
 			<br>
 			<h1> About Site </h1>
@@ -17,12 +17,76 @@
 			
 		<h2>How it Works</h2>
 		<p >The similarity score you recieve is based on the following algorithms:<br>
-			<ul>
-				<li>Cosine </li>
-				<li>Jaccard Index</li>
-			</ul>
-		<p>Furthermore, you also get to see the top matching sentences</p>
-	</div>
-		
+		<p>
+			<div style="position: relative;">
+				
+				<button class="Cosine"
+				onclick="myFunction()">Learn about the algorithms
+				</button>
+				<div style="position: absolute; top: 50%; left: 0; font-size: 20px;">
+				</div>
+			</div>
+		</p>
+
+		<div id="myDIV" style="font-size: 15px;"></div>
+
+		<script>
+		function myFunction() {
+		  	var x = document.getElementById("myDIV");
+		  	if (x.innerHTML === "") {
+		    	x.innerHTML = "Cosine similarity checks how similar pieces of texts are, it does this by turning the words into vectors. The vectors are then used to calculate a numerator which is the amount of times the words appear in the texts. A denominator is then calculated by how often the word appears in each text and then square rooted. while disregarding the size of the two texts. Even if one is half the length of the other.";
+		  	} 
+			else if (x.innerHTML === "Cosine similarity checks how similar pieces of texts are, it does this by turning the words into vectors. The vectors are then used to calculate a numerator which is the amount of times the words appear in the texts. A denominator is then calculated by how often the word appears in each text and then square rooted. while disregarding the size of the two texts. Even if one is half the length of the other.") {
+		    	x.innerHTML = "Jaccard Index checks how similar pieces of texts are by how many common words exist over the total amount of words in the text.";
+		  	}
+
+			else if(x.innerHTML === "Jaccard Index checks how similar pieces of texts are by how many common words exist over the total amount of words in the text.") {
+				x.innerHTML = "Levenstein";
+			}
+
+			else if(x.innerHTML === "Levenstein") {
+				x.innerHTML = "Monge Elkan";
+			}
+
+			else {
+				x.innerHTML = "";
+			}
+		}
+		</script>
+
+		<p>Furthermore, you also get to see the top matching sentences. The result will also give an overall percentage of how similar the texts are, and an individual percentage for each of the algorithms.</p>
+
+		<p>
+			<div style="position: relative;">
+				
+				<button class="Developer"
+				onclick="myFunction2()">Developers
+				</button>
+				<div style="position: absolute; top: 50%; left: 0; font-size: 20px;">
+				</div>
+			</div>
+		</p>>
+
+		<div id="myDIV2" style="font-size: 15px;"></div>
+
+		<script>
+		function myFunction2() {
+			var x = document.getElementById("myDIV2");
+			if (x.innerHTML === "") {
+				x.innerHTML = "Nehal Batra" + "<br>" + 
+							  "Ben Feeney" + "<br>" + 
+							  "Peter Looney" + "<br>" + 
+							  "Rhys Mac Giollabhuidhe" + "<br>" + 
+							  "Rishi Manu" + "<br>" + 
+							  "Patrick Martin" + "<br>" + 
+							  "Matthew Wallace" + "<br>" + 
+							  "Holly Daly" + "<br>" + 
+							  "Joe Hand" + "<br>" + 
+							  "Davy O'Leary-Fraad";
+			} else {
+				x.innerHTML = "";
+			}
+			}
+		</script>
 	</body>
 <html>
