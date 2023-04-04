@@ -16,11 +16,20 @@
 
 		<div class="text">
 			<h2>Summary of Text 1:</h2>
+			<p id="first_summary"></p>
 		</div>
 
 		<div class="text">
 			<h2>Summary of Text 2:</h2>
+			<p id="second_summary"></p>
 		</div>
 
 	</body>
+
+	<script>
+
+		document.getElementById("first_summary").innerText = sessionStorage.getItem("firstSum");
+		document.getElementById("second_summary").innerText = sessionStorage.getItem("secondSum");
+
+	</script>
 </html>

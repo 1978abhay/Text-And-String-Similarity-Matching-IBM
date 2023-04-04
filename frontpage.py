@@ -9,7 +9,6 @@ import spacy
 import Data_Garbage_Removal.summariseToN as summariser
 import statistics
 
-
 app = Flask(__name__)
 
 
@@ -73,7 +72,8 @@ def tryprocess(string1, string2):
         "lmongeelkan": longmongeelkan,
         "tfidf": tfidf,
         "spacy": str1_2,
-        "summary": review,
+        "first_summary": review[0],
+        "second_summary": review[1],
         "average": averagescore
     }
 
@@ -93,6 +93,8 @@ def tryprocess(string1, string2):
 # def score (simscore):
 # return f"<h1>{simscore}</h1>"
 # return "hello"
+
+# regex.txt first regex very important :   <.*?>
 
 if __name__ == "__main__":
     app.run(debug=True)

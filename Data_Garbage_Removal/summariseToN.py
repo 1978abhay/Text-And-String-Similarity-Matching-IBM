@@ -1,7 +1,3 @@
-import pandas as pd
-import re
-import os
-import nltk
 from nltk.tokenize import sent_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
@@ -30,6 +26,7 @@ def scale_summary(t1, t2):
     sen2_size = len(sen2)
     word1 = word_tokenize(t1)
     word2 = word_tokenize(t2)
+
 
     if ( len(word1) / len(word2) >= 1.3 ): # if text 1 has 1.3 or more times as many words as text 2, we want to narrow them down to be similar sizes
         desired_size = sen2_size * SIZE_REDUCTION
@@ -94,7 +91,7 @@ def summarise(text, n):
 
 def clean(text):
 
-    with open("regex.txt","r") as f:
+    with open("Data_Garbage_Removal/regex.txt","r") as f:
         regexes = [line.split("~") for line in f.read().split("\n")]
 
     for oldRegex, newRegex in regexes:
