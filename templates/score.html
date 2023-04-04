@@ -106,10 +106,17 @@
 				document.getElementById("longME_score").innerText = "Long Monge Elkan Result: 0";
 			else	    document.getElementById("longME_score").innerText = "Long Monge Elkan Result: ".concat(results.lmongeelkan);
 
-			if(results.summary == "")
-				document.getElementById("input_summary").innerText = "No Summary";
+			if(results.first_summary == "")
+				sessionStorage.setItem("firstSum", "No summary available");
 			else
-			    document.getElementById("input_summary").innerText = "".concat(results.summary);
+			    sessionStorage.setItem("firstSum", results.first_summary);
+
+			if(results.second_summary == "")
+				sessionStorage.setItem("secondSum", "No summary available");
+			else
+			    sessionStorage.setItem("secondSum", results.second_summary);
+
+
 
 			document.getElementById("average_score").innerText = "Average Similarity Score: ".concat(results.average);
 			document.getElementById("average_graph").setAttribute("style", "--value:".concat(Math.round(results.average)));

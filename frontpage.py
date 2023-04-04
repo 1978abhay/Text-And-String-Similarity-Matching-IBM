@@ -6,7 +6,7 @@ import mongeElkan as me
 import LevenshteinSimscore as lt
 import tf_idf as tf
 import spacy
-import Data_Garbage_Removal.summariseToN as summary
+from Data_Garbage_Removal.summariseToN import scale_summary
 
 app = Flask(__name__)
 
@@ -53,7 +53,7 @@ def tryprocess(string1, string2):
     tfidf = tf.bert(string1, string2)
     print("tf_idf result is: ", tfidf)
 
-    review = summary.summarise(string1 + string2, 1)
+    review = scale_summary(string1, string2)
     print(review)
 
     nlp = spacy.load('en_core_web_lg')
@@ -71,7 +71,8 @@ def tryprocess(string1, string2):
         "lmongeelkan": longmongeelkan,
         "tfidf": tfidf,
         "spacy": str1_2,
-        "summary": review,
+        "first_summary": review[0],
+        "second_summary": review[1],
         "average": averagescore
     }
 
@@ -91,6 +92,8 @@ def tryprocess(string1, string2):
 # def score (simscore):
 # return f"<h1>{simscore}</h1>"
 # return "hello"
+
+# regex.txt first regex very important :   <.*?>
 
 if __name__ == "__main__":
     app.run(debug=True)
