@@ -6,7 +6,8 @@ import mongeElkan as me
 import LevenshteinSimscore as lt
 import tf_idf as tf
 import spacy
-from Data_Garbage_Removal.summariseToN import scale_summary
+import Data_Garbage_Removal.summariseToN as summariser
+import statistics
 
 app = Flask(__name__)
 
@@ -53,8 +54,8 @@ def tryprocess(string1, string2):
     tfidf = tf.bert(string1, string2)
     print("tf_idf result is: ", tfidf)
 
-    review = scale_summary(string1, string2)
-    print(review)
+    review = summariser.summarise(string1 + string2, 1)
+    print("Summary: " + review)
 
     nlp = spacy.load('en_core_web_lg')
     str1 = nlp(string1)
@@ -62,7 +63,7 @@ def tryprocess(string1, string2):
     str1_2 = str1.similarity(str2)
     print("Spacy result is: ", str1_2)
 
-    averagescore = round(((jaccardans + cosineans + longmongeelkan + tfidf) / 4) * 100, 3)
+    averagescore = round(statistics.median_high(sorted([jaccardans, cosineans, longmongeelkan, tfidf])), 3)
     print("Average score:", averagescore)
 
     results = {

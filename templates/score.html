@@ -35,7 +35,7 @@
 
 		<div class="text">
 			<h2>Top Matching Sentences:</h2>
-			<p id="1."></p>
+			<p id="input_summary"></p>
 			<br>
 			<p id="2."></p>
 			<br>
@@ -119,7 +119,7 @@
 
 
 			document.getElementById("average_score").innerText = "Average Similarity Score: ".concat(results.average);
-			document.getElementById("average_graph").setAttribute("style", "--value:".concat(Math.round(results.average)));
+			document.getElementById("average_graph").setAttribute("style", "--value:".concat(Math.round(results.average * 100)));
 		}
 
 
