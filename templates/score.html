@@ -19,7 +19,7 @@
 			<p id="cosine_score"></p>
 			<p id="tfidf_score"></p>
 			<p id="jaccard_score"></p>
-			<p id="spacy_score"></p>
+			<p id="synoME_score"></p>
 			<p id="longME_score"></p>
 			<br>
 			<h3 id="average_score"></h3>
@@ -92,15 +92,15 @@
 			else
 			    document.getElementById("cosine_score").innerText = "Cosine Result: ".concat(results.cosine);
 
-			if(results.spacy == "")
-				document.getElementById("spacy_score").innerText = "Spacy Result: 0";
-			else
-			    document.getElementById("spacy_score").innerText = "Spacy Result: ".concat(results.spacy);
-
 			if(results.tfidf == "")
 				document.getElementById("tfidf_score").innerText = "TF-IDF Result: 0";
 			else
 			    document.getElementById("tfidf_score").innerText = "TF-IDF Result: ".concat(results.tfidf);
+
+			if(results.synomongeelkan == "")
+				document.getElementById("synoME_score").innerText = "Synonym Monge-Elkan Result: 0";
+			else
+			    document.getElementById("synoME_score").innerText = "Synonym Monge-Elkan Result: ".concat(results.synomongeelkan);
 
 			if(results.lmongeelkan == "")
 				document.getElementById("longME_score").innerText = "Long Monge Elkan Result: 0";
@@ -116,9 +116,19 @@
 			else
 			    sessionStorage.setItem("secondSum", results.second_summary);
 
+			if(results.first_reduction == "")
+				sessionStorage.setItem("firstReduce", "No summary available");
+			else
+			    sessionStorage.setItem("firstReduce", results.first_reduction);
+
+			if(results.second_reduction == "")
+				sessionStorage.setItem("secondReduce", "No summary available");
+			else
+			    sessionStorage.setItem("secondReduce", results.second_reduction);
 
 
-			document.getElementById("average_score").innerText = "Average Similarity Score: ".concat(results.average);
+
+			document.getElementById("average_score").innerText = "Average Similarity Score: ".concat(Math.round(results.average * 100));
 			document.getElementById("average_graph").setAttribute("style", "--value:".concat(Math.round(results.average * 100)));
 		}
 

@@ -16,11 +16,13 @@
 
 		<div class="text">
 			<h2>Summary of Text 1:</h2>
+			<p id="first_reduction"></p>
 			<p id="first_summary"></p>
 		</div>
 
 		<div class="text">
 			<h2>Summary of Text 2:</h2>
+			<p id="second_reduction"></p>
 			<p id="second_summary"></p>
 		</div>
 
@@ -30,6 +32,9 @@
 
 		document.getElementById("first_summary").innerText = sessionStorage.getItem("firstSum");
 		document.getElementById("second_summary").innerText = sessionStorage.getItem("secondSum");
+
+		document.getElementById("first_reduction").innerText = "First Input Reduction: ".concat(sessionStorage.getItem("firstReduce"));
+		document.getElementById("second_reduction").innerText = "Second Input Reduction: ".concat(sessionStorage.getItem("secondReduce"));
 
 	</script>
 </html>

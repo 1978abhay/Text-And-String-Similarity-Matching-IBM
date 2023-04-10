@@ -1,6 +1,7 @@
 import pandas as pd
 import re
 import os
+
 import nltk
 from nltk.tokenize import sent_tokenize
 from nltk.corpus import stopwords
@@ -10,7 +11,7 @@ from collections import defaultdict
 import heapq
 import re
 
-SIZE_REDUCTION = 0.5
+SIZE_REDUCTION = 0.25
 
 # If the two texts are different sizes, summarises both to within SIZE_REDUCTION many sentences of the smaller text
 # returns the following array:
@@ -44,6 +45,11 @@ def scale_summary(t1, t2):
         print(desired_size)
         t1 = summarise(t1, desired_size)
         t2 = summarise(t2, desired_size)
+
+    # ADDED BY JOE IN THE EVENT NEITHER TEXT IS SIGNIFICANTLY LARGER THAN THE OTHER
+    else:
+        t1 = summarise(t1, round(sen1_size * SIZE_REDUCTION))
+        t2 = summarise(t2, round(sen2_size * SIZE_REDUCTION))
 
     new1_size = len(sent_tokenize(t1))
     new2_size = len(sent_tokenize(t2))

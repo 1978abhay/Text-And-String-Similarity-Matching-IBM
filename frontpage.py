@@ -1,9 +1,13 @@
 from flask import Flask, render_template, redirect
+from nltk import word_tokenize
+from nltk.corpus import stopwords
+
 import cosine
 import jaccard
 import json
 import mongeElkan as me
 import LevenshteinSimscore as lt
+import checkingifsynonym as checkSyn
 import tf_idf as tf
 import spacy
 import Data_Garbage_Removal.summariseToN as summariser
@@ -38,32 +42,59 @@ def rerouter():
 
 @app.route('/testFunc/<string:string1>/<string:string2>')
 def tryprocess(string1, string2):
-    string1Vect = cosine.text_to_vector(string1)
-    string2Vect = cosine.text_to_vector(string2)
+    review = summariser.scale_summary(string1, string2)
+    print(review)
+
+    stop_words = stopwords.words('english')  # Removing stopwords
+
+
+    input1words = word_tokenize(review[0])
+    input2words = word_tokenize(review[1])
+
+    filtered_string1 = [w for w in input1words if not w.lower() in stop_words]
+    filtered_string2 = [w for w in input2words if not w.lower() in stop_words]
+    filtered_string1 = []
+    filtered_string2 = []
+
+    for w in input1words:
+        if w not in stop_words:
+            filtered_string1.append(w)
+    for w in input2words:
+        if w not in stop_words:
+            filtered_string2.append(w)
+
+    filtered_string1 = ' '.join(filtered_string1)
+    filtered_string2 = ' '.join(filtered_string2)
+
+    print(filtered_string1)
+    print(filtered_string2)
+
+    first_sum_reduction = str(round((review[4] / review[2]) * 100, 3)) + '%'
+    second_sum_reduction = str(round((review[5] / review[3]) * 100, 3)) + '%'
+
+    string1Vect = cosine.text_to_vector(filtered_string1)
+    string2Vect = cosine.text_to_vector(filtered_string2)
     cosineans = cosine.get_cosine(string1Vect, string2Vect)
 
-    print("string1 : ", string1, "string2 : ", string2)
     print("cosine result is ", cosineans)
 
-    jaccardans = jaccard.jaccard_index(string1, string2)
+    jaccardans = jaccard.jaccard_index(filtered_string1, filtered_string2)
 
     print("jaccard result is: ", jaccardans)
 
-    longmongeelkan = me.longMongeElkan(1, string1, string2, lt.sim_score)
+    longmongeelkan = me.longMongeElkan(1, filtered_string1, filtered_string2, lt.sim_score)
     print("longmongeelkan result is: ", longmongeelkan)
-    tfidf = tf.bert(string1, string2)
+
+    synonymmongeelkan = me.quadSimilarityME(filtered_string1, filtered_string2, lambda a, b: int(checkSyn.is_synonym(a, b)))
+
+    tfidf = tf.bert(review[0], review[1])
     print("tf_idf result is: ", tfidf)
 
-    review = summariser.summarise(string1 + string2, 1)
-    print("Summary: " + review)
 
-    nlp = spacy.load('en_core_web_lg')
-    str1 = nlp(string1)
-    str2 = nlp(string2)
-    str1_2 = str1.similarity(str2)
-    print("Spacy result is: ", str1_2)
+    topsentences = summariser.summarise(string1 + string2, 5)
+    print(topsentences)
 
-    averagescore = round(statistics.median_high(sorted([jaccardans, cosineans, longmongeelkan, tfidf])), 3)
+    averagescore = round(((jaccardans + cosineans + longmongeelkan + (tfidf*4) + synonymmongeelkan)/8), 3)
     print("Average score:", averagescore)
 
     results = {
@@ -71,9 +102,11 @@ def tryprocess(string1, string2):
         "jaccard": jaccardans,
         "lmongeelkan": longmongeelkan,
         "tfidf": tfidf,
-        "spacy": str1_2,
+        "synomongeelkan": synonymmongeelkan,
         "first_summary": review[0],
         "second_summary": review[1],
+        "first_reduction": first_sum_reduction,
+        "second_reduction": second_sum_reduction,
         "average": averagescore
     }
 
