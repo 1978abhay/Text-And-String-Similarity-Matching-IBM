@@ -29,8 +29,6 @@ def scale_summary(t1, t2):
     sen2 = sent_tokenize(t2)
     sen1_size = len(sen1)
     sen2_size = len(sen2)
-    word1 = word_tokenize(t1)
-    word2 = word_tokenize(t2)
 
     if ( len(sen1) > len(sen2) ): # if text 1 has more words than text 2, we want to narrow them down to be similar sizes
         desired_size = sen2_size * SIZE_REDUCTION
@@ -46,15 +44,19 @@ def scale_summary(t1, t2):
         t1 = summarise(t1, desired_size)
         t2 = summarise(t2, desired_size)
 
-    # ADDED BY JOE IN THE EVENT NEITHER TEXT IS SIGNIFICANTLY LARGER THAN THE OTHER
+    # In the event neither text is significantly larger than the other
     else:
         t1 = summarise(t1, round(sen1_size * SIZE_REDUCTION))
         t2 = summarise(t2, round(sen2_size * SIZE_REDUCTION))
 
+    # tokenise the inputs before returning so they don't need to be tokenised in the main program
+    word1 = word_tokenize(t1)
+    word2 = word_tokenize(t2)
+
     new1_size = len(sent_tokenize(t1))
     new2_size = len(sent_tokenize(t2))
 
-    inputs = [t1, t2, sen1_size, sen2_size, new1_size, new2_size]
+    inputs = [word1, word2, sen1_size, sen2_size, new1_size, new2_size]
     return inputs
     
 

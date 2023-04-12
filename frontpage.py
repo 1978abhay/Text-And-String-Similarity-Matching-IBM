@@ -25,6 +25,7 @@ def homepage():
 def compare():
     return render_template("score.html")
 
+
 @app.route('/summary')
 def summary():
     return render_template("summary.html")
@@ -42,20 +43,20 @@ def rerouter():
 
 @app.route('/testFunc/<string:string1>/<string:string2>')
 def tryprocess(string1, string2):
+    # Summarise both texts and return an array containing both summaries as tokenised arrays,
+    # the size of the inputs, and the size of the summaries
     review = summariser.scale_summary(string1, string2)
-    print(review)
+    # review = [summary1, summary2, string1_size, string2_size, new1_size, new2_size]
 
     stop_words = stopwords.words('english')  # Removing stopwords
 
+    input1words = review[0]
+    input2words = review[1]
 
-    input1words = word_tokenize(review[0])
-    input2words = word_tokenize(review[1])
-
-    filtered_string1 = [w for w in input1words if not w.lower() in stop_words]
-    filtered_string2 = [w for w in input2words if not w.lower() in stop_words]
     filtered_string1 = []
     filtered_string2 = []
 
+    # iterate through each input array, ignoring all stop words encountered
     for w in input1words:
         if w not in stop_words:
             filtered_string1.append(w)
@@ -63,40 +64,45 @@ def tryprocess(string1, string2):
         if w not in stop_words:
             filtered_string2.append(w)
 
+    # convert the resulting arrays back into strings
     filtered_string1 = ' '.join(filtered_string1)
     filtered_string2 = ' '.join(filtered_string2)
 
-    print(filtered_string1)
-    print(filtered_string2)
-
+    # get the percentage reduction of both inputs and their summaries
     first_sum_reduction = str(round((review[4] / review[2]) * 100, 3)) + '%'
     second_sum_reduction = str(round((review[5] / review[3]) * 100, 3)) + '%'
 
-    string1Vect = cosine.text_to_vector(filtered_string1)
-    string2Vect = cosine.text_to_vector(filtered_string2)
-    cosineans = cosine.get_cosine(string1Vect, string2Vect)
+    # perform similarity checking with different algorithms
+    # cosine
+    string1vect = cosine.text_to_vector(filtered_string1)
+    string2vect = cosine.text_to_vector(filtered_string2)
+    cosineans = cosine.get_cosine(string1vect, string2vect)
 
-    print("cosine result is ", cosineans)
-
+    # jaccard
     jaccardans = jaccard.jaccard_index(filtered_string1, filtered_string2)
 
-    print("jaccard result is: ", jaccardans)
-
+    # Long Monge Elkan using Levenshtein distance scoring
     longmongeelkan = me.longMongeElkan(1, filtered_string1, filtered_string2, lt.sim_score)
-    print("longmongeelkan result is: ", longmongeelkan)
 
-    synonymmongeelkan = me.quadSimilarityME(filtered_string1, filtered_string2, lambda a, b: int(checkSyn.is_synonym(a, b)))
+    # Long Monge Elkan using Synonym checking
+    synonymmongeelkan = me.longMongeElkan(1, filtered_string1, filtered_string2,
+                                            lambda a, b: int(checkSyn.is_synonym(a, b)))
 
+    # tf_idf
     tfidf = tf.bert(review[0], review[1])
-    print("tf_idf result is: ", tfidf)
 
+    # Calculate the average score, with tf_idf counting for half of the overall weighting
+    averagescore = round(((jaccardans + cosineans + longmongeelkan + (tfidf * 4) + synonymmongeelkan) / 8), 3)
 
-    topsentences = summariser.summarise(string1 + string2, 5)
-    print(topsentences)
+    # print("cosine result is ", cosineans)
+    # print("jaccard result is: ", jaccardans)
+    # print("tf_idf result is: ", tfidf)
+    # print("longmongeelkan result is: ", longmongeelkan)
+    # print("synonym monge elkan result is: ", synonymmongeelkan)
 
-    averagescore = round(((jaccardans + cosineans + longmongeelkan + (tfidf*4) + synonymmongeelkan)/8), 3)
-    print("Average score:", averagescore)
+    # print("Average score:", averagescore)
 
+    # generate a tuple containing all similarity results, the string summaries, along with the calculated similarity result
     results = {
         "cosine": cosineans,
         "jaccard": jaccardans,
