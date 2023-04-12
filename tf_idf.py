@@ -9,8 +9,10 @@ def bert(a, b):
 
     result = cosine_similarity([sentence_embeddings[0]],
                              sentence_embeddings[1:]).item(0)
-    if (result < 0) :
+    if result < 0:
         return 0
+    if result > 1:
+        return 1
     return result
   
 X = "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible."
