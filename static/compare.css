@@ -77,6 +77,20 @@ p{
   margin-left: 20px;
 }
 
+.container {
+    height: 100px;
+    position: relative;
+    /*border: 3px solid green; */
+  }
+
+.compareButton{
+    width: 200px;
+    height:40px;
+    border-radius: 5px;
+    background-color: rgb(156, 216, 236);
+    font-size: 20px;
+  }
+
 .info{
   width: 50px;
   margin: 15px;

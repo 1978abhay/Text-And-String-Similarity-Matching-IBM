@@ -20,7 +20,7 @@
 			</div>
 			<div class="child">
 				<form>
-					<label for='text'><b>Insert Text 2 Here:</b></label><br>
+					<label for='text2'><b>Insert Text 2 Here:</b></label><br>
 					<textarea id='text2' class='text' name='text2'></textarea>
 				</form>
 			</div>
@@ -37,7 +37,7 @@
 		<div class="container">
 			<div class="center">
    				<a href=summary>
-	   				<button class="compareButton">Summarise</button>
+	   				<button class="compareButton" onclick="test_compare()">Summarise</button>
    				</a>
 			</div>
 		</div>
@@ -55,12 +55,11 @@
 	function test_compare() {
 
 		var string1 = document.getElementById("text1").value;
-		string1 = string1.replace(/\?/g, '.');
+		string1 = string1.replace(/[\?\/]/g, '.');
 		var string2 = document.getElementById("text2").value;
-		string2 = string2.replace(/\?/g, '.');
+		string2 = string2.replace(/[\?\/]/g, '.');
 		sessionStorage.setItem("firstString", string1);
 		sessionStorage.setItem("secondString", string2);
-		//fetch('/testFunc/'.concat(string1, "/", string2))
 	}
 
 	</script>

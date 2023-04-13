@@ -19,7 +19,7 @@
 			<p id="cosine_score"></p>
 			<p id="tfidf_score"></p>
 			<p id="jaccard_score"></p>
-			<p id="spacy_score"></p>
+			<p id="synoME_score"></p>
 			<p id="longME_score"></p>
 			<br>
 			<h3 id="average_score"></h3>
@@ -29,48 +29,26 @@
 		<div id="average_graph" class="graph" role="progressbar" aria-valuenow="65" aria-valuemin="0"
 			aria-valuemax="100" style="--value:0"></div>
 		<div class="text">
-
 			<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
 		</div>
-
-		<div class="text">
-			<h2>Top Matching Sentences:</h2>
-			<p id="1."></p>
-			<br>
-			<p id="2."></p>
-			<br>
-			<p id="3."></p>
-			<br>
-			<p id="4."></p>
-			<br>
-			<p id="5."></p>
-			<br>
+		<div class="container">
+			<div class="center">
+   				<a href=summary>
+	   				<button class="compareButton">Summarise</button>
+   				</a>
+			</div>
 		</div>
+
 
 	</body>
 
 	<script>
-		var output_score = document.getElementById("jaccard_score").innerText;
-		var output_score = document.getElementById("cosine_score").innerText;
 
 		$(
 			function() {
 				test_compare();
-				//fetchCompScore(output_score, "/testFunc");
 			}
 		);
-		/*
-		function fetchCompScore(score, link) {
-			$.ajax({
-				type: "GET",
-				url: link,
-				dataType: "json",
-				success: function(result){
-					score = result;
-					document.getElementById("cosine_score").innerText = result;
-				}
-			});
-		}*/
 
 		async function test_compare() {
 
@@ -78,10 +56,11 @@
 			var string2 = sessionStorage.getItem("secondString");
 
 
-			const response = await fetch('/testFunc/'.concat(string1, "/", string2), {
+			const response = await fetch('/compare/'.concat(string1, "/", string2), {
 				method: 'GET'
 			});
 			const results = await response.json();
+
 			if(results.jaccard == "")
 				document.getElementById("jaccard_score").innerText = "Jaccard Index Result: 0";
 			else
@@ -92,29 +71,47 @@
 			else
 			    document.getElementById("cosine_score").innerText = "Cosine Result: ".concat(results.cosine);
 
-			if(results.spacy == "")
-				document.getElementById("spacy_score").innerText = "Spacy Result: 0";
-			else
-			    document.getElementById("spacy_score").innerText = "Spacy Result: ".concat(results.spacy);
-
 			if(results.tfidf == "")
 				document.getElementById("tfidf_score").innerText = "TF-IDF Result: 0";
 			else
 			    document.getElementById("tfidf_score").innerText = "TF-IDF Result: ".concat(results.tfidf);
 
+			if(results.synomongeelkan == "")
+				document.getElementById("synoME_score").innerText = "Synonym Monge-Elkan Result: 0";
+			else
+			    document.getElementById("synoME_score").innerText = "Synonym Monge-Elkan Result: ".concat(results.synomongeelkan);
+
 			if(results.lmongeelkan == "")
 				document.getElementById("longME_score").innerText = "Long Monge Elkan Result: 0";
-			else	    document.getElementById("longME_score").innerText = "Long Monge Elkan Result: ".concat(results.lmongeelkan);
+			else
+				document.getElementById("longME_score").innerText = "Long Monge Elkan Result: ".concat(results.lmongeelkan);
 
-			//if(results.summary == "")
-			//	document.getElementById("input_summary").innerText = "No Summary";
-			//else
-			//    document.getElementById("input_summary").innerText = "".concat(results.summary);
+			if(results.first_summary == "")
+				sessionStorage.setItem("firstSum", "No summary available");
+			else
+			    sessionStorage.setItem("firstSum", results.first_summary);
 
-			document.getElementById("average_score").innerText = "Average Similarity Score: ".concat(results.average);
-			document.getElementById("average_graph").setAttribute("style", "--value:".concat(Math.round(results.average)));
+			if(results.second_summary == "")
+				sessionStorage.setItem("secondSum", "No summary available");
+			else
+			    sessionStorage.setItem("secondSum", results.second_summary);
+
+			if(results.first_reduction == "")
+				sessionStorage.setItem("firstReduce", "No summary available");
+			else
+			    sessionStorage.setItem("firstReduce", results.first_reduction);
+
+			if(results.second_reduction == "")
+				sessionStorage.setItem("secondReduce", "No summary available");
+			else
+			    sessionStorage.setItem("secondReduce", results.second_reduction);
+
+
+
+			document.getElementById("average_score").innerText = "Average Similarity Score: ".concat(Math.round(results.average * 100));
+			document.getElementById("average_graph").setAttribute("style", "--value:".concat(Math.round(results.average * 100)));
 		}
 
 
 	</script>
-<html>
+</html>
