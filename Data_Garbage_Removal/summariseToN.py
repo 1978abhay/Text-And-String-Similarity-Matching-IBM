@@ -33,14 +33,14 @@ def scale_summary(t1, t2):
     if ( len(sen1) > len(sen2) ): # if text 1 has more words than text 2, we want to narrow them down to be similar sizes
         desired_size = sen2_size * SIZE_REDUCTION
         desired_size = round(desired_size)
-        print(desired_size)
+        #print(desired_size)
         t1 = summarise(t1, desired_size)
         t2 = summarise(t2, desired_size)
 
     elif ( len(sen2) > len(sen1) ): # if text 2 has more words than text 1, we want to narrow them down to be similar sizes
         desired_size = sen1_size * SIZE_REDUCTION
         desired_size = round(desired_size)
-        print(desired_size)
+        #print(desired_size)
         t1 = summarise(t1, desired_size)
         t2 = summarise(t2, desired_size)
 

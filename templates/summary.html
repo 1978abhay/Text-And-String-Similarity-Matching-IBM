@@ -26,15 +26,67 @@
 			<p id="second_summary"></p>
 		</div>
 
+		<div class="text">
+			<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+		</div>
+
+		<div class="container">
+			<div class="center">
+   				<a href=compare>
+	   				<button class="compareButton" >Compare</button>
+   				</a>
+			</div>
+		</div>
+
 	</body>
 
 	<script>
 
-		document.getElementById("first_summary").innerText = sessionStorage.getItem("firstSum");
-		document.getElementById("second_summary").innerText = sessionStorage.getItem("secondSum");
+		$(
+			function() {
+				test_compare();
+			}
+		);
 
-		document.getElementById("first_reduction").innerText = "First Input Reduction: ".concat(sessionStorage.getItem("firstReduce"));
-		document.getElementById("second_reduction").innerText = "Second Input Reduction: ".concat(sessionStorage.getItem("secondReduce"));
+		async function test_compare() {
+
+			var string1 = sessionStorage.getItem("firstString");
+			var string2 = sessionStorage.getItem("secondString");
+
+
+			const response = await fetch('/compare/'.concat(string1, "/", string2), {
+				method: 'GET'
+			});
+			const results = await response.json();
+
+			if(results.first_summary == "")
+				sessionStorage.setItem("firstSum", "No summary available");
+			else
+			    //sessionStorage.setItem("firstSum", results.first_summary);
+			    document.getElementById("first_summary").innerText = results.first_summary;
+
+			if(results.second_summary == "")
+				sessionStorage.setItem("secondSum", "No summary available");
+			else
+			    //sessionStorage.setItem("secondSum", results.second_summary);
+			    document.getElementById("second_summary").innerText = results.second_summary;
+
+			if(results.first_reduction == "")
+				sessionStorage.setItem("firstReduce", "No summary available");
+			else
+			    //sessionStorage.setItem("firstReduce", results.first_reduction);
+			    document.getElementById("first_reduction").innerText = "First Input Reduction: ".concat(results.first_reduction);
+
+			if(results.second_reduction == "")
+				sessionStorage.setItem("secondReduce", "No summary available");
+			else
+			    //sessionStorage.setItem("secondReduce", results.second_reduction);
+			    document.getElementById("second_reduction").innerText = "First Input Reduction: ".concat(results.second_reduction);
+
+
+
+		}
+
 
 	</script>
 </html>

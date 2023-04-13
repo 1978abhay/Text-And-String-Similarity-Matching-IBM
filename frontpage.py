@@ -41,7 +41,7 @@ def rerouter():
     return redirect('/')
 
 
-@app.route('/testFunc/<string:string1>/<string:string2>')
+@app.route('/compare/<string:string1>/<string:string2>')
 def tryprocess(string1, string2):
     # Summarise both texts and return an array containing both summaries as tokenised arrays,
     # the size of the inputs, and the size of the summaries
@@ -86,7 +86,7 @@ def tryprocess(string1, string2):
 
     # Long Monge Elkan using Synonym checking
     synonymmongeelkan = me.longMongeElkan(1, filtered_string1, filtered_string2,
-                                            lambda a, b: int(checkSyn.is_synonym(a, b)))
+                                          lambda a, b: int(checkSyn.is_synonym(a, b)))
 
     # tf_idf
     tfidf = tf.bert(review[0], review[1])
