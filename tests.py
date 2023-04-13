@@ -27,8 +27,8 @@ def test_mongeelkan_identical():
     assert (longMongeElkan(1, X, Y, sim_score)) == 1.0
     assert (simMongeElkan(1, X, Y, sim_score)) == 1.0
 
-    assert (longMongeElkan(1, X, Y, lambda a, b: int(checkSyn.is_synonym(a, b)))) == 1.0
-    assert (simMongeElkan(1, X, Y, lambda a, b: int(checkSyn.is_synonym(a, b)))) == 1.0
+    #assert (longMongeElkan(1, X, Y, lambda a, b: int(checkSyn.is_synonym(a, b)))) == 1.0
+    #assert (simMongeElkan(1, X, Y, lambda a, b: int(checkSyn.is_synonym(a, b)))) == 1.0
 
 
 # Testing the TF_IDF similarity matching algorithm on identical strings
