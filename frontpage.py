@@ -50,8 +50,12 @@ def tryprocess(string1, string2):
 
     stop_words = stopwords.words('english')  # Removing stopwords
 
-    input1words = review[0]
-    input2words = review[1]
+    input1string = review[0]
+    input2string = review[1]
+
+    # tokenise the inputs before returning, so they don't need to be tokenised in the main program
+    input1words = word_tokenize(input1string)
+    input2words = word_tokenize(input2string)
 
     filtered_string1 = []
     filtered_string2 = []
