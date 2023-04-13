@@ -1,6 +1,5 @@
 import math
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
+import re
 from collections import Counter
 
 
