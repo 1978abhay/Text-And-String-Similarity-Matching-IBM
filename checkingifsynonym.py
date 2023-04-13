@@ -5,10 +5,8 @@ from nltk.corpus import wordnet as wn
 def is_synonym(a: str, b: str) -> bool:
     if a == b:
         return True
-
-    synonym_sets = wn.synsets(a)
     for synonym in wn.synsets(a):
-        for lemma in synonym.lemma_names():
-            if b == lemma:
-                return True
+        if b in synonym.lemma_names():
+            return True
+
     return False
