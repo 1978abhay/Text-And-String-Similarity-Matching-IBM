@@ -49,14 +49,10 @@ def scale_summary(t1, t2):
         t1 = summarise(t1, round(sen1_size * SIZE_REDUCTION))
         t2 = summarise(t2, round(sen2_size * SIZE_REDUCTION))
 
-    # tokenise the inputs before returning so they don't need to be tokenised in the main program
-    word1 = word_tokenize(t1)
-    word2 = word_tokenize(t2)
-
     new1_size = len(sent_tokenize(t1))
     new2_size = len(sent_tokenize(t2))
 
-    inputs = [word1, word2, sen1_size, sen2_size, new1_size, new2_size]
+    inputs = [t1, t2, sen1_size, sen2_size, new1_size, new2_size]
     return inputs
     
 
