@@ -24,8 +24,8 @@ def test_jaccard_identical():
 # Testing the Monge Elkan similarity matching algorithm in combination with Levenshtein similarity funciton
 def test_mongeelkan_identical():
     X = Y = "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible."
-    assert (longMongeElkan(1, X, Y, sim_score)) == 1.0
-    assert (simMongeElkan(1, X, Y, sim_score)) == 1.0
+    assert (synonym_monge_elkan(X, Y)) == 1.0
+    assert (levenshtein_monge_elkan(X, Y)) == 1.0
 
     #assert (longMongeElkan(1, X, Y, lambda a, b: int(checkSyn.is_synonym(a, b)))) == 1.0
     #assert (simMongeElkan(1, X, Y, lambda a, b: int(checkSyn.is_synonym(a, b)))) == 1.0

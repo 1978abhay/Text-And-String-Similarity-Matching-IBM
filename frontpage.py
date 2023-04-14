@@ -86,11 +86,10 @@ def tryprocess(string1, string2):
     jaccardans = jaccard.jaccard_index(filtered_string1, filtered_string2)
 
     # Long Monge Elkan using Levenshtein distance scoring
-    longmongeelkan = me.longMongeElkan(1, filtered_string1, filtered_string2, lt.sim_score)
+    longmongeelkan = me.levenshtein_monge_elkan(filtered_string1, filtered_string2)
 
     # Long Monge Elkan using Synonym checking
-    synonymmongeelkan = me.longMongeElkan(1, filtered_string1, filtered_string2,
-                                          lambda a, b: int(checkSyn.is_synonym(a, b)))
+    synonymmongeelkan = me.synonym_monge_elkan(filtered_string1, filtered_string2)
 
     # tf_idf
     tfidf = tf.bert(review[0], review[1])
