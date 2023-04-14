@@ -37,7 +37,7 @@ numberOfWordsInText2 = len(b)
 totalNumberOfLettersInText1 = averageLengthOfWordsInText1*numberOfWordsInText1
 thecounter=0
 for z in range(numberOfWordsInText1-1):
-  if(anotherWord(a[z],b[z] )==True or a[z]==b[z]):
-     thecounter=thecounter+1
+    if(anotherWord(a[z],b[z] )==True or a[z]==b[z]):
+        thecounter=thecounter+1
 thecounter = thecounter/numberOfWordsInText1*100
 print(thecounter, "% Similarity by meanings")

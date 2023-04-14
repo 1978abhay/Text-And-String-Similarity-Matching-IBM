@@ -40,8 +40,13 @@ def min_distance(firstWord, secondWord):
 def sim_score(word, word1):
     if(len(word)> len(word1)):
      lengthOfLongestWord = len(word)
-    else:
+    elif len(word) < len(word1):
      lengthOfLongestWord = len(word1)
+    else:
+        if len(word) == 0:
+            return 1
+        else:
+            lengthOfLongestWord = len(word)
     numberOfEdits =min_distance(word,word1)
     if(numberOfEdits>=lengthOfLongestWord):
       return 0
