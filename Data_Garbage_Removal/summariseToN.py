@@ -29,25 +29,29 @@ def scale_summary(t1, t2):
     sen2 = sent_tokenize(t2)
     sen1_size = len(sen1)
     sen2_size = len(sen2)
+    word1 = word_tokenize(t1)
+    word2 = word_tokenize(t2)
 
     if ( len(sen1) > len(sen2) ): # if text 1 has more words than text 2, we want to narrow them down to be similar sizes
         desired_size = sen2_size * SIZE_REDUCTION
-        desired_size = round(desired_size)
-        #print(desired_size)
+        if desired_size <= 1:
+            desired_size = 1
+        else:
+            desired_size = round(desired_size)
+        print(desired_size)
         t1 = summarise(t1, desired_size)
         t2 = summarise(t2, desired_size)
 
     elif ( len(sen2) > len(sen1) ): # if text 2 has more words than text 1, we want to narrow them down to be similar sizes
         desired_size = sen1_size * SIZE_REDUCTION
-        desired_size = round(desired_size)
-        #print(desired_size)
+        if desired_size <= 1:
+            desired_size = 1
+        else:
+            desired_size = round(desired_size)
+        print(desired_size)
         t1 = summarise(t1, desired_size)
         t2 = summarise(t2, desired_size)
-
-    # In the event neither text is significantly larger than the other
-    else:
-        t1 = summarise(t1, round(sen1_size * SIZE_REDUCTION))
-        t2 = summarise(t2, round(sen2_size * SIZE_REDUCTION))
+        
 
     new1_size = len(sent_tokenize(t1))
     new2_size = len(sent_tokenize(t2))
@@ -58,62 +62,66 @@ def scale_summary(t1, t2):
 
 def summarise(text, n):
 
+
     text = clean(text)
     # Tokenise the text into sentences
     sentences = sent_tokenize(text)
-    #Algorithm to reduce words to their root. The idea is that we want to count words like "go" and "going" as the same thing.
-    ps = PorterStemmer()
-    #List of common words to remove.
-    stop_words = set(stopwords.words('english')) #List of common words to remove.
 
-    # Remove stop words, stem the remaining words
-    # We consider words that are more common to be worth more, because if they appear frequently in the text, then it is likely those words represent a better summarisation of the 
-    #       meaning of the text.
-    word_frequencies = defaultdict(int)
-    for sentence in sentences:
-        words = word_tokenize(sentence)
-        for word in words:
-            if word.lower() not in stop_words:
-                word_frequencies[ps.stem(word.lower())] += 1
+    if len(sentences) <= 1 | n >= len(sentences):
+        return text
+    else:
+        #Algorithm to reduce words to their root. The idea is that we want to count words like "go" and "going" as the same thing.
+        ps = PorterStemmer()
+        #List of common words to remove.
+        stop_words = set(stopwords.words('english')) #List of common words to remove.
 
-    # Calculate the total value of non-stop-words in the sentence to determine how useful the sentence is
-    sentence_values = defaultdict(int)
-    for sentence in sentences:
-        for word in word_tokenize(sentence):
-            if ps.stem(word.lower()) in word_frequencies:
-                sentence_values[sentence] += word_frequencies[ps.stem(word.lower())]
+        # Remove stop words, stem the remaining words
+        # We consider words that are more common to be worth more, because if they appear frequently in the text, then it is likely those words represent a better summarisation of the 
+        #       meaning of the text.
+        word_frequencies = defaultdict(int)
+        for sentence in sentences:
+            words = word_tokenize(sentence)
+            for word in words:
+                if word.lower() not in stop_words:
+                    word_frequencies[ps.stem(word.lower())] += 1
 
-        if (sentence.count(" ") >= 3):     
-            sentence_values[sentence] /= len(word_tokenize(sentence))
-        else:
-            sentence_values[sentence] = 0     
+        # Calculate the total value of non-stop-words in the sentence to determine how useful the sentence is
+        sentence_values = defaultdict(int)
+        for sentence in sentences:
+            for word in word_tokenize(sentence):
+                if ps.stem(word.lower()) in word_frequencies:
+                    sentence_values[sentence] += word_frequencies[ps.stem(word.lower())]
 
-    # Create an array of the n best sentences in their original order
-    ordered = sorted(sentence_values.values())[-n:]
-    summary_sentences = []
-    for i in range(len(sentences)):
-        if sentence_values[sentences[i]] in ordered:
-            summary_sentences.append(sentences[i])
+            if (sentence.count(" ") >= 3):     
+                sentence_values[sentence] /= len(word_tokenize(sentence))
+            else:
+                sentence_values[sentence] = 0     
 
-    # It is possible for us to have more than n sentences, if we have 2 with the same score.
-    #   this loop ensures we have only n.
-    while len(summary_sentences) > n:
-        lo = sentence_values[summary_sentences[0]]
-        lo_string = "";
-        for i in range(len(summary_sentences)):
-            if sentence_values[summary_sentences[i]] < lo:
-                lo = sentence_values[summary_sentences[i]]
-                lo_string = summary_sentences[i]
-                
-        summary_sentences.remove(lo_string)
-        
-        
+        # Create an array of the n best sentences in their original order
+        ordered = sorted(sentence_values.values())[-n:]
+        summary_sentences = []
+        for i in range(len(sentences)):
+            if sentence_values[sentences[i]] in ordered:
+                summary_sentences.append(sentences[i])
 
-    # Remove garbage characters
-    summary = " ".join([re.sub(r'\s([\.\?\!])', r'\1', sentence) for sentence in summary_sentences])
+        # It is possible for us to have more than n sentences, if we have 2 with the same score.
+        #   this loop ensures we have only n.
+        while len(summary_sentences) > n:
+            lo = sentence_values[summary_sentences[0]]
+            lo_string = summary_sentences[0];
+            for i in range(len(summary_sentences)):
+                if sentence_values[summary_sentences[i]] < lo:
+                    lo = sentence_values[summary_sentences[i]]
+                    lo_string = summary_sentences[i]
+                    
+            summary_sentences.remove(lo_string)
+            
+            
 
+        # Remove garbage characters
+        summary = " ".join([re.sub(r'\s([\.\?\!])', r'\1', sentence) for sentence in summary_sentences])
 
-    return summary
+        return summary
 
 def clean(text):
 
