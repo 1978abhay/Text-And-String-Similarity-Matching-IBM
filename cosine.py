@@ -1,6 +1,5 @@
 import math
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
+import re
 from collections import Counter
 
 
@@ -22,16 +21,8 @@ def get_cosine(vec1, vec2):
         
 
 def text_to_vector(text):                                         # Vector of the words in a text and how often they occur
-    stop_words = set(stopwords.words('english'))                  # Removing stopwords 
-    words = word_tokenize(text)                                   # Finds all the words in the text and returns them as a list of strings
-    filtered_text = [w for w in words if not w.lower() in stop_words]
-    filtered_text = []
-    
-    for w in words:
-        if w not in stop_words:
-            filtered_text.append(w)
-    
-    return Counter(filtered_text)                                         # How often each word occurs
+    words = re.findall(r'\w+', text)                              # Finds all the words in the text and returns them as a list of strings
+    return Counter(words)                                         # How often each word occurs
 
 
 # Will change to import csv
