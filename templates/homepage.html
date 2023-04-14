@@ -1,45 +1,49 @@
 <!doctype html>
 <html>
 <head>
-	<link 
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" 
-	integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-		<title> Text Similarity Matcher </title>
+	<link href="{{ url_for('static', filename='homepage.css') }}" rel="stylesheet" type="text/css">
+	<title> Text Similarity Matcher </title>
 </head>
-	<body style="background-color:lightskyblue;">
-		<h1 style="font-family: Baskerville Old Face; text-align:center; border-bottom: 2px solid #000000; color: #000000; font-size: 40px; 
-					text-transform: uppercase; letter-spacing: 4px; margin-bottom: 30px;">TEXT COMPARE</h1>		
-			<div style="display:flex;">
-			<form style="margin-left:85px; margin-right:150px;">
-				<label for="text1" style="font-family: Baskerville Old Face; font-weight: bold;">Insert Text 1 Here:</label>
-				<br>
-				<textarea id="text1" name="text1" rows="10" cols="50" class="inline-div" style="background-color:white;border: 4px solid black;"></textarea>
-				<br><br>
-			</form>
-			<form style="margin-left:85; margin-right: 150;">
-				<label for="text2" style="font-family: Baskerville Old Face; font-weight: bold;">Insert Text 2 Here:</label>
-				<br>
-				<textarea id="text2" name="text2" rows="10" cols="50" class="inline-div" style="background-color:white; border: 4px solid black;"></textarea>
-				<br><br>
-			</form>
+	<body>
+		<a href=about>
+			<button class="info">?</button> 
+		</a>
+		<br> 
+		<h1>Text Comparator</h1>	
+		<br> <br> <br>
+		<div class="parent">
+			<div class="child">
+				<form>
+					<label for='text1'><b> Insert Text 1 Here:</b></label><br>
+					<textarea id='text1' class='text' name='text1'></textarea>
+				</form>
+			</div>
+			<div class="child">
+				<form>
+					<label for='text2'><b>Insert Text 2 Here:</b></label><br>
+					<textarea id='text2' class='text' name='text2'></textarea>
+				</form>
+			</div>
 		</div>
 
- 	<p align="center" style="font-family: Baskerville Old Face;">
-   		<a href=compare>
-	   		<button ui="height:30px;width:100px background-color: #4CAF50; color: white;" onclick="test_compare()">COMPARE</button>
-   		</a>
- 	</p>
-	 <style>
-		button:hover {
-			background-color:lightskyblue;
-			color: white;
-		}
-	</style>
- 	<p align="center" style="font-family: Baskerville Old Face;">
-		<a href=about >
-			<button ui="height:30px;width:60px">About</button>
-		</a>
-  </p>
+		<div class="container">
+			<div class="center">
+   				<a href=compare>
+	   				<button class="compareButton" onclick="test_compare()">Compare</button>
+   				</a>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="center">
+   				<a href=summary>
+	   				<button class="compareButton" onclick="test_compare()">Summarise</button>
+   				</a>
+			</div>
+		</div>
+
+		
+
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
@@ -51,46 +55,12 @@
 	function test_compare() {
 
 		var string1 = document.getElementById("text1").value;
+		string1 = string1.replace(/[\?\/]/g, '.');
 		var string2 = document.getElementById("text2").value;
+		string2 = string2.replace(/[\?\/]/g, '.');
 		sessionStorage.setItem("firstString", string1);
 		sessionStorage.setItem("secondString", string2);
-		//fetch('/testFunc/'.concat(string1, "/", string2))
 	}
 
 	</script>
 <html>
-	
-<!-- Standard button 
-	<button type="button" class="btn btn-default">Default</button>
-
-	Provides extra visual weight and identifies the primary action in a set of buttons
-	<button type="button" class="btn btn-primary">Primary</button>
-
-	Indicates a successful or positive action
-	<button type="button" class="btn btn-success">Success</button>
-
-	Contextual button for informational alert messages
-	<button type="button" class="btn btn-info">Info</button>
-
-	Indicates caution should be taken with this action
-	<button type="button" class="btn btn-warning">Warning</button>
-
-	Indicates a dangerous or potentially negative action
-	<button type="button" class="btn btn-danger">Danger</button>
-
-	Deemphasize a button by making it look like a link while maintaining button behavior
-	<button type="button" class="btn btn-link">Link</button>
-	-->
-	
-	<!--<form class="form-inline">
-		<div class="form-group">
-			<label for="exampleInputName2">Text 1</label>
-			<input type="text" class="form-control" id="exampleInputText1" placeholder="Insert Text 1 here">
-		</div>
-		<div class="form-group">
-			<label for="exampleInputEmail2">Text 2</label>
-			<input type="text" class="form-control" id="exampleInputText2" placeholder="Insert Text 2 here">
-		</div>
-		
-		<a href = compare>Compare</a>
-</form>-->

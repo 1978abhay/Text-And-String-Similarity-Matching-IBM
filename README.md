@@ -9,8 +9,12 @@ An application that will generate a score for two bodies of text based on the si
 ## Run Frontend
 
 1. Open main folder in terminal
-2. Run "flask --app frontpage run" *
+2. Run "flask --app frontpage --debug run" *
 
 * If flask has not been installed, run "pip install Flask" 
 
+## Kill Running Port (mac)
+
+1. sudo lsof -i :5000
+2. kill -9 <PID>
 
